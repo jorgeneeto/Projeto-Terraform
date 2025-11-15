@@ -2,9 +2,7 @@ locals {
   name = "${var.environment}-frontend"
 }
 
-# -------------------------------------------------------------
-# 1. S3 BUCKET (SEM ACL, SEM OWNERSHIP CONTROLS)
-# -------------------------------------------------------------
+
 resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name
 
@@ -14,9 +12,7 @@ resource "aws_s3_bucket" "this" {
   )
 }
 
-# -------------------------------------------------------------
-# 2. PUBLIC ACCESS BLOCK (LIBERA APENAS POLICY)
-# -------------------------------------------------------------
+
 resource "aws_s3_bucket_public_access_block" "this" {
   bucket = aws_s3_bucket.this.id
 
@@ -26,9 +22,7 @@ resource "aws_s3_bucket_public_access_block" "this" {
   restrict_public_buckets = false   # ← necessário para website
 }
 
-# -------------------------------------------------------------
-# 3. WEBSITE CONFIGURATION
-# -------------------------------------------------------------
+
 resource "aws_s3_bucket_website_configuration" "this" {
   bucket = aws_s3_bucket.this.id
 
@@ -41,9 +35,7 @@ resource "aws_s3_bucket_website_configuration" "this" {
   }
 }
 
-# -------------------------------------------------------------
-# 4. BUCKET POLICY PÚBLICA (ÚNICA FORMA POSSÍVEL)
-# -------------------------------------------------------------
+
 data "aws_iam_policy_document" "public_read" {
 
   statement {
@@ -72,9 +64,6 @@ resource "aws_s3_bucket_policy" "public" {
   ]
 }
 
-# -------------------------------------------------------------
-# 5. UPLOAD DO INDEX (SEM ACL!)
-# -------------------------------------------------------------
 resource "aws_s3_object" "index" {
   bucket       = aws_s3_bucket.this.id
   key          = "index.html"

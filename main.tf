@@ -2,7 +2,7 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 
-# NETWORK MODULE
+# NETWORK
 module "network" {
   source = "./modules/network"
 
@@ -15,7 +15,7 @@ module "network" {
 }
 
 
-# FRONTEND STATIC (S3)
+# FRONTEND
 module "frontend" {
   source      = "./modules/s3-frontend"
   environment = var.environment
@@ -25,7 +25,7 @@ module "frontend" {
 }
 
 
-# BACKEND ECS FARGATE
+# BACKEND
 module "backend" {
   source = "./modules/ecs-backend"
 
@@ -43,7 +43,7 @@ module "backend" {
 }
 
 
-# DAILY JOB (Lambda + EventBridge)
+# DAILY JOB
 module "daily_job" {
   source = "./modules/lambda-daily"
 

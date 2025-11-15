@@ -64,9 +64,8 @@ resource "aws_iam_role_policy" "lambda_policy" {
   })
 }
 
-#
+
 # Lambda Function
-#
 resource "aws_lambda_function" "this" {
   function_name = "${local.prefix}-function"
   handler       = "lambda.handler"
@@ -82,9 +81,8 @@ resource "aws_lambda_function" "this" {
   })
 }
 
-#
+
 # Empacota o lambda.py em um ZIP automaticamente
-#
 data "archive_file" "lambda_zip" {
   type        = "zip"
   output_path = "${path.module}/lambda.zip"
@@ -94,9 +92,8 @@ data "archive_file" "lambda_zip" {
   }
 }
 
-#
+
 # EventBridge Rule (agendamento)
-#
 resource "aws_cloudwatch_event_rule" "schedule" {
   name                = "${local.prefix}-rule"
   schedule_expression = var.schedule_expression
@@ -106,18 +103,16 @@ resource "aws_cloudwatch_event_rule" "schedule" {
   })
 }
 
-#
+
 # EventBridge Target → Lambda
-#
 resource "aws_cloudwatch_event_target" "lambda_target" {
   rule      = aws_cloudwatch_event_rule.schedule.name
   target_id = "dailyjob"
   arn       = aws_lambda_function.this.arn
 }
 
-#
+
 # Permissão para EventBridge invocar a Lambda
-#
 resource "aws_lambda_permission" "allow_eventbridge" {
   statement_id  = "AllowExecutionFromEventBridge"
   action        = "lambda:InvokeFunction"

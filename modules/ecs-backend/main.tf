@@ -70,8 +70,6 @@ resource "aws_security_group" "sg" {
   description = "SG for backend service"
   vpc_id      = var.vpc_id
 
-  # Nenhuma entrada (sem exposição)
-  # Só saída via NAT
   egress {
     from_port   = 0
     to_port     = 0

@@ -20,7 +20,6 @@ variable "tags" {
   }
 }
 
-
 # NETWORK
 variable "vpc_cidr" {
   type        = string
@@ -40,7 +39,7 @@ variable "private_subnet_cidrs" {
   default     = ["10.0.2.0/24"]
 }
 
-# BACKEND ECS
+# BACKEND
 variable "backend_image" {
   description = "Container image for backend API"
   type        = string
