@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio AWS - Frontend</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0d1117;
+            color: #e6edf3;
+            margin: 0;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #58a6ff;
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: #161b22;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(50, 50, 50, 0.5);
+        }
+
+        .success {
+            color: #3fb950;
+            font-weight: bold;
+        }
+
+        a {
+            color: #58a6ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        .btn {
+            background: #238636;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #e6edf3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎉 Desafio AWS - Frontend</h1>
+
+    <div class="card">
+        <p>Seu website está rodando com sucesso no <strong>S3 Static Website Hosting</strong>!</p>
+
+        <p class="success">✓ Bucket criado</p>
+        <p class="success">✓ ACL pública aplicada</p>
+        <p class="success">✓ Website configurado</p>
+
+        <hr style="opacity: 0.1; margin: 25px 0;">
+
+        <h3>Serviços implementados neste desafio:</h3>
+
+        <p>🟦 <strong>Frontend:</strong> Website estático hospedado no Amazon S3</p>
+        <p>🟩 <strong>Backend:</strong> API rodando em ECS Fargate (subnet privada, NAT, ExecCommand)</p>
+        <p>🟧 <strong>Rotina diária:</strong> Lambda + EventBridge enviando arquivos ao S3</p>
+
+        <a class="btn" href="#" onclick="alert('Backend só pode ser acessado via ECS Exec.'); return false;">
+            Testar Backend
+        </a>
+    </div>
+
+    <div class="footer">
+        Desenvolvido para o Desafio AWS · Jorge Neto
+    </div>
+
+</body>
+</html>
