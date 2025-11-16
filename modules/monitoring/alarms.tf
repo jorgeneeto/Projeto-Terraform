@@ -43,6 +43,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_task_not_running" {
   evaluation_periods  = 1
   threshold           = 1
   comparison_operator = "LessThanThreshold"
+  treat_missing_data  = "breaching"
 
   dimensions = {
     ClusterName = var.ecs_cluster_name

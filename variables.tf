@@ -64,7 +64,7 @@ variable "ecs_memory" {
 variable "daily_job_cron" {
   description = "EventBridge cron expression (UTC time)"
   type        = string
-  default     = "cron(03 20 * * ? *)"
+  default     = "cron(0 10 * * ? *)"
 }
 
 variable "alert_email" {

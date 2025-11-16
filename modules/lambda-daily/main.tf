@@ -17,13 +17,11 @@ def handler(event, context):
 EOF
 }
 
-# Bucket
 resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name
   tags   = var.tags
 }
 
-# Versionamento
 resource "aws_s3_bucket_versioning" "versioning" {
   bucket = aws_s3_bucket.this.id
   versioning_configuration {
@@ -31,7 +29,6 @@ resource "aws_s3_bucket_versioning" "versioning" {
   }
 }
 
-# Lifecycle
 resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
   bucket = aws_s3_bucket.this.id
 
@@ -54,7 +51,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
   }
 }
 
-# Bloqueio público
 resource "aws_s3_bucket_public_access_block" "block" {
   bucket                  = aws_s3_bucket.this.id
   block_public_acls       = true
@@ -63,7 +59,6 @@ resource "aws_s3_bucket_public_access_block" "block" {
   restrict_public_buckets = true
 }
 
-# Role da Lambda
 resource "aws_iam_role" "lambda_role" {
   name = "${local.prefix}-role"
 
@@ -77,7 +72,6 @@ resource "aws_iam_role" "lambda_role" {
   })
 }
 
-# Permissões
 resource "aws_iam_role_policy" "lambda_policy" {
   name = "${local.prefix}-policy"
   role = aws_iam_role.lambda_role.id
@@ -99,7 +93,6 @@ resource "aws_iam_role_policy" "lambda_policy" {
   })
 }
 
-# Empacota o lambda inline
 data "archive_file" "lambda_zip" {
   type        = "zip"
   output_path = "${path.module}/lambda.zip"
@@ -110,7 +103,6 @@ data "archive_file" "lambda_zip" {
   }
 }
 
-# Lambda Function
 resource "aws_lambda_function" "this" {
   function_name    = "${local.prefix}-function"
   handler          = "lambda.handler"
@@ -122,7 +114,6 @@ resource "aws_lambda_function" "this" {
   tags             = var.tags
 }
 
-# EventBridge
 resource "aws_cloudwatch_event_rule" "schedule" {
   name                = "${local.prefix}-rule"
   schedule_expression = var.schedule_expression

@@ -3,7 +3,6 @@ locals {
 }
 
 
-# Log group
 resource "aws_cloudwatch_log_group" "this" {
   name              = "/ecs/${local.prefix}"
   retention_in_days = 7
@@ -14,7 +13,6 @@ resource "aws_cloudwatch_log_group" "this" {
 }
 
 
-# ECS Cluster
 resource "aws_ecs_cluster" "this" {
   name = "${local.prefix}-cluster"
   
@@ -29,7 +27,6 @@ resource "aws_ecs_cluster" "this" {
 }
 
 
-# Execution Role (pull image + write logs)
 resource "aws_iam_role" "execution_role" {
   name = "${local.prefix}-execution-role"
 
@@ -49,7 +46,6 @@ resource "aws_iam_role_policy_attachment" "execution_role_policy" {
 }
 
 
-# Task Role (permite ECS Exec)
 resource "aws_iam_role" "task_role" {
   name = "${local.prefix}-task-role"
 
@@ -69,7 +65,6 @@ resource "aws_iam_role_policy_attachment" "task_role_ssm" {
 }
 
 
-# Security Group
 resource "aws_security_group" "sg" {
   name        = "${local.prefix}-sg"
   description = "SG for backend service"
@@ -88,7 +83,6 @@ resource "aws_security_group" "sg" {
 }
 
 
-# Task Definition
 resource "aws_ecs_task_definition" "this" {
   family                   = "${local.prefix}-task"
   requires_compatibilities = ["FARGATE"]
@@ -124,7 +118,6 @@ resource "aws_ecs_task_definition" "this" {
 }
 
 
-# ECS Service
 resource "aws_ecs_service" "this" {
   name            = "${local.prefix}-service"
   cluster         = aws_ecs_cluster.this.id

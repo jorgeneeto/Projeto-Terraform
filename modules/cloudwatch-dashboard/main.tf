@@ -7,7 +7,6 @@ resource "aws_cloudwatch_dashboard" "main" {
 
   dashboard_body = jsonencode({
     widgets = [
-      # ECS CPU Utilization
       {
         type = "metric",
         x = 0,
@@ -25,7 +24,6 @@ resource "aws_cloudwatch_dashboard" "main" {
         }
       },
 
-      # ECS Memory Utilization
       {
         type = "metric",
         x = 6,
@@ -43,7 +41,6 @@ resource "aws_cloudwatch_dashboard" "main" {
         }
       },
 
-      # Lambda Invocations
       {
         type = "metric",
         x = 0,
@@ -61,7 +58,6 @@ resource "aws_cloudwatch_dashboard" "main" {
         }
       },
 
-      # Lambda Errors
       {
         type = "metric",
         x = 6,
@@ -79,7 +75,6 @@ resource "aws_cloudwatch_dashboard" "main" {
         }
       },
 
-      # S3 Daily Job Bucket Size
       {
         type = "metric",
         x = 0,
