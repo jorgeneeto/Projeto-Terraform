@@ -1,6 +1,5 @@
-# GLOBAL CONFIG
 variable "environment" {
-  description = "Environment name)"
+  description = "Environment name"
   type        = string
   default     = "teste"
 }
@@ -20,7 +19,6 @@ variable "tags" {
   }
 }
 
-# NETWORK
 variable "vpc_cidr" {
   type        = string
   description = "CIDR for the main VPC"
@@ -39,17 +37,16 @@ variable "private_subnet_cidrs" {
   default     = ["10.0.2.0/24"]
 }
 
-# BACKEND
 variable "backend_image" {
   description = "Container image for backend API"
   type        = string
-  default     = "public.ecr.aws/docker/library/python:3.10-slim"
+  default     = "mendhak/http-https-echo"
 }
 
 variable "backend_port" {
   type        = number
   description = "Listening port of backend container"
-  default     = 8000
+  default     = 8080
 }
 
 variable "ecs_cpu" {
@@ -64,9 +61,13 @@ variable "ecs_memory" {
   default     = 512
 }
 
-# DAILY JOB
 variable "daily_job_cron" {
   description = "EventBridge cron expression (UTC time)"
   type        = string
-  default     = "cron(0 10 * * ? *)"
+  default     = "cron(03 20 * * ? *)"
+}
+
+variable "alert_email" {
+  description = "Email que receberá alertas do SNS"
+  type        = string
 }

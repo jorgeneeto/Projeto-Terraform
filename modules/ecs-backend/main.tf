@@ -17,6 +17,11 @@ resource "aws_cloudwatch_log_group" "this" {
 # ECS Cluster
 resource "aws_ecs_cluster" "this" {
   name = "${local.prefix}-cluster"
+  
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 
   tags = merge(var.tags, {
     Name = "${local.prefix}-cluster"

@@ -1,7 +1,6 @@
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
-
 # NETWORK
 module "network" {
   source = "./modules/network"
@@ -14,7 +13,6 @@ module "network" {
   tags                 = var.tags
 }
 
-
 # FRONTEND
 module "frontend" {
   source      = "./modules/s3-frontend"
@@ -23,7 +21,6 @@ module "frontend" {
   bucket_name = "${var.environment}-frontend-${data.aws_caller_identity.current.account_id}"
   tags        = var.tags
 }
-
 
 # BACKEND
 module "backend" {
@@ -42,7 +39,6 @@ module "backend" {
   tags = var.tags
 }
 
-
 # DAILY JOB
 module "daily_job" {
   source = "./modules/lambda-daily"
@@ -52,4 +48,27 @@ module "daily_job" {
 
   bucket_name = "${var.environment}-dailyjob-${data.aws_caller_identity.current.account_id}"
   tags        = var.tags
+}
+
+# MONITORING
+module "monitoring" {
+  source = "./modules/monitoring"
+
+  environment          = var.environment
+  alert_email          = var.alert_email
+  ecs_cluster_name     = module.backend.cluster_name
+  ecs_service_name     = module.backend.service_name
+  lambda_function_name = module.daily_job.lambda_function_name
+}
+
+# DASHBOARD
+module "dashboard" {
+  source = "./modules/cloudwatch-dashboard"
+
+  environment          = var.environment
+  aws_region           = var.aws_region
+  ecs_cluster_name     = module.backend.cluster_name
+  ecs_service_name     = module.backend.service_name
+  lambda_function_name = module.daily_job.lambda_function_name
+  s3_dailyjob_bucket   = module.daily_job.bucket_name
 }
