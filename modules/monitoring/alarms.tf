@@ -3,7 +3,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_cpu_high" {
   metric_name         = "CpuUtilized"
   namespace           = "ECS/ContainerInsights"
   statistic           = "Average"
-  period              = 10
+  period              = 60
   evaluation_periods  = 1
   threshold           = 80
   comparison_operator = "GreaterThanThreshold"

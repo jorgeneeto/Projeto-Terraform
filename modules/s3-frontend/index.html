@@ -1,90 +1,182 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desafio AWS - Frontend</title>
-
+    <title>Teste Técnico - DreamSquad</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #0d1117;
-            color: #e6edf3;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        * {
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #0A1855 0%, #1B2C80 100%);
+            padding: 20px;
+        }
+
+        .container {
             text-align: center;
+            padding: 60px 50px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 
+                0 20px 40px rgba(10, 36, 99, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #F97AA6;
         }
 
         h1 {
-            color: #58a6ff;
-            font-size: 2.4rem;
-            margin-bottom: 10px;
+            color: #0A1855;
+            font-weight: 700;
+            font-size: 2.8rem;
+            margin-bottom: 0.5em;
         }
 
-        .card {
-            background: #161b22;
-            padding: 25px;
+        .subtitle {
+            color: #5D737E;
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .test-area {
+            margin: 2rem 0;
+        }
+
+        .test-btn {
+            background: #F97AA6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
             border-radius: 10px;
-            max-width: 600px;
-            margin: 20px auto;
-            box-shadow: 0 0 10px rgba(50, 50, 50, 0.5);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(10, 36, 99, 0.3);
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10, 36, 99, 0.4);
+        }
+
+        .test-result {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #0A1855;
+            min-height: 30px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: rgba(249, 122, 166, 0.1);
+            border: 1px solid rgba(249, 122, 166, 0.3);
+            transition: all 0.3s ease;
         }
 
         .success {
-            color: #3fb950;
-            font-weight: bold;
+            color: #0A1855;
+            background: rgba(249, 122, 166, 0.15);
+            border-color: rgba(249, 122, 166, 0.4);
+            font-weight: 600;
         }
 
-        a {
-            color: #58a6ff;
-            text-decoration: none;
-            font-weight: bold;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .footer {
-            margin-top: 40px;
-            font-size: 0.8rem;
-            opacity: 0.6;
+        .container {
+            animation: fadeInUp 0.8s ease-out;
         }
 
-        .btn {
-            background: #238636;
-            padding: 12px 20px;
-            border-radius: 8px;
-            display: inline-block;
-            margin: 10px 0;
-            font-size: 1rem;
-            color: #e6edf3;
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 25px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>DreamSquad</h1>
+        <p class="subtitle">Teste Técnico - Engenharia</p>
+        
+        <div class="test-area">
+            <button class="test-btn" onclick="testService()">
+                Clique para testar
+            </button>
+            <div class="test-result" id="result"></div>
+        </div>
 
-    <h1>🎉 Desafio AWS - Frontend</h1>
-
-    <div class="card">
-        <p>Seu website está rodando com sucesso no <strong>S3 Static Website Hosting</strong>!</p>
-
-        <p class="success">✓ Bucket criado</p>
-        <p class="success">✓ ACL pública aplicada</p>
-        <p class="success">✓ Website configurado</p>
-
-        <hr style="opacity: 0.1; margin: 25px 0;">
-
-        <h3>Serviços implementados neste desafio:</h3>
-
-        <p>🟦 <strong>Frontend:</strong> Website estático hospedado no Amazon S3</p>
-        <p>🟩 <strong>Backend:</strong> API rodando em ECS Fargate (subnet privada, NAT, ExecCommand)</p>
-        <p>🟧 <strong>Rotina diária:</strong> Lambda + EventBridge enviando arquivos ao S3</p>
-
-        <a class="btn" href="#" onclick="alert('Backend só pode ser acessado via ECS Exec.'); return false;">
-            Testar Backend
-        </a>
     </div>
 
-    <div class="footer">
-        Desenvolvido para o Desafio AWS · Jorge Neto
-    </div>
+    <script>
+        const resultElement = document.getElementById('result');
 
+        function testService() {
+            resultElement.textContent = "✅ Serviço 1 disponível - FrontEnd estático funcionando perfeitamente!";
+            resultElement.className = "test-result success";
+            resultElement.style.opacity = '0';
+            resultElement.style.transform = 'translateY(10px)';
+            
+            setTimeout(() => {
+                resultElement.style.opacity = '1';
+                resultElement.style.transform = 'translateY(0)';
+            }, 10);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const subtitle = document.querySelector('.subtitle');
+            const originalText = subtitle.textContent;
+            subtitle.textContent = '';
+            
+            let i = 0;
+            function typeWriter() {
+                if (i < originalText.length) {
+                    subtitle.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            
+            setTimeout(typeWriter, 500);
+        });
+    </script>
 </body>
 </html>
