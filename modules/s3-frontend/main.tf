@@ -21,6 +21,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "this" {
     id     = "expire-old-versions"
     status = "Enabled"
 
+    filter {
+      prefix = ""
+    }
+
     noncurrent_version_expiration {
       noncurrent_days = 30
     }
@@ -29,6 +33,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "this" {
   rule {
     id     = "abort-multipart"
     status = "Enabled"
+
+    filter {
+      prefix = ""
+    }
 
     abort_incomplete_multipart_upload {
       days_after_initiation = 7
